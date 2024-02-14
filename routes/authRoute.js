@@ -14,6 +14,11 @@ router.post("/login", loginController);
 // forget password || POST
 router.post("/forget-password", forgetPassword);
 
+router.get("/show", async function (req, res) {
+  const findUser = await userModel.find();
+  res.send(findUser);
+});
+
 // private route -method GET
 router.get("/private", authenticateToken, (req, res) => {
   res.json({ message: "This is a private route", user: req.user });
