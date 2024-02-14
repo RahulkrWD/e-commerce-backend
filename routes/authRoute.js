@@ -4,6 +4,7 @@ const registerController = require("../controllers/authRegister");
 const loginController = require("../controllers/authLogin");
 const authenticateToken = require("../controllers/authMiddleware");
 const forgetPassword = require("../controllers/forgetPassword");
+const userModel = require("../models/user");
 // Register - method POST
 router.post("/register", registerController);
 

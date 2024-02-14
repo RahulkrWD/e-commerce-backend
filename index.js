@@ -14,7 +14,7 @@ connectDB(); // connection to mongodb
 app.use(cors());
 
 app.get("/", function (req, res) {
-  res.send({ message: "welcome to my app" });
+  res.send({ message: "welcome to my app e-commerce app" });
 });
 
 // routes
