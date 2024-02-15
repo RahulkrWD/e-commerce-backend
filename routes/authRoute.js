@@ -14,6 +14,7 @@ router.post("/login", loginController);
 // forget password || POST
 router.post("/forget-password", forgetPassword);
 
+// find all users
 router.get("/show", async function (req, res) {
   const findUser = await userModel.find();
   res.send(findUser);
