@@ -1,11 +1,11 @@
-const userModel = require("../models/user");
+const userModel = require("../../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 // register
 const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, uniqueId, answer } = req.body;
+    const { name, email, password, uniqueId, answer } = req.body;
     // validations
     if (!name) {
       return res.send({ message: "Name is required" });
@@ -15,9 +15,6 @@ const registerController = async (req, res) => {
     }
     if (!password) {
       return res.send({ message: "password is required" });
-    }
-    if (!phone) {
-      return res.send({ message: "phone is required" });
     }
     if (!answer) {
       return res.send({ message: "answer is required" });
@@ -38,7 +35,6 @@ const registerController = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      phone,
       uniqueId,
       answer,
     });
