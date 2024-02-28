@@ -1,6 +1,5 @@
-const mobileModel = require("../../models/mobile");
-
-async function mobile(req, res) {
+const shoesModel = require("../../models/shoes");
+async function shoes(req, res) {
   try {
     let query = {};
     let id = +req.params.id;
@@ -12,25 +11,21 @@ async function mobile(req, res) {
     if (id) {
       query = { CategoryId: id };
     }
-
-    // Range filter lcost to hcost
+    // range filter lcost to hcost
     if (lcost && hcost) {
       query = { Cost: { $gt: lcost, $lt: hcost } };
     }
-
     // sort filter
     const sortOptions = {
       asc: { Cost: 1 },
       desc: { Cost: -1 },
     };
-
     const sortQuery = sortOptions[sort] || {};
 
-    const mobile = await mobileModel.find(query).sort(sortQuery);
-    res.send(mobile);
-  } catch (error) {
-    res.send({ message: "something problem Please try again" });
+    const shoes = await shoesModel.find(query).sort(sortQuery);
+    res.send(shoes);
+  } catch (err) {
+    res.send({ success: false, message: "Server Error Please Try Again" });
   }
 }
-
-module.exports = mobile;
+module.exports = shoes;
