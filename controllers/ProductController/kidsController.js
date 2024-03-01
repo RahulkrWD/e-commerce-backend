@@ -1,7 +1,7 @@
-const footwearModel = require("../../models/footwears");
+const kidsModel = require("../../models/kids");
 
-// find footwears
-async function footWear(req, res) {
+// find kids and filter it
+async function kids(req, res) {
   let query = {};
   let id = +req.query.id;
   let lcost = +req.query.lcost;
@@ -23,15 +23,15 @@ async function footWear(req, res) {
 
   const sortQuery = sortOption[sort] || {};
   try {
-    const find = await footwearModel.find(query).sort(sortQuery);
+    const find = await kidsModel.find(query).sort(sortQuery);
     res.send(find);
   } catch (err) {
-    console.log(err);
+    res.send({ success: false, message: "server error" });
   }
 }
 
-// add footwears
-async function addFootwear(req, res) {
+// add kids
+async function addKids(req, res) {
   try {
     const {
       categoryId,
@@ -46,7 +46,7 @@ async function addFootwear(req, res) {
       details,
       gallery,
     } = req.body;
-    const exising = await footwearModel.findOne({ productId });
+    const exising = await kidsModel.findOne({ productId });
     if (exising) {
       return res.send({ success: false, message: "Already existing" });
     }
@@ -57,7 +57,7 @@ async function addFootwear(req, res) {
         message: "CategoryId does not match",
       });
     }
-    const create = await footwearModel.create({
+    const create = await kidsModel.create({
       categoryId,
       productId,
       cost,
@@ -76,24 +76,20 @@ async function addFootwear(req, res) {
   }
 }
 
-// delete footwears
-async function deleteFootwear(req, res) {
+// delete kids
+async function deleteKids(req, res) {
   const { productId } = req.body;
 
-  const exising = await footwearModel.findOne({ productId });
+  const exising = await kidsModel.findOne({ productId });
   if (!exising) {
     return res.send({ success: false, message: "product not existing" });
   }
   try {
-    const deleteFootwear = await footwearModel.deleteOne({ productId });
-    res.send({
-      success: true,
-      message: "product delete success",
-      deleteFootwear,
-    });
+    const deleteKids = await kidsModel.deleteOne({ productId });
+    res.send({ success: true, message: "product delete success", deleteKids });
   } catch (err) {
     console.log(err);
     res.send({ success: false, message: "server error", err });
   }
 }
-module.exports = { footWear, addFootwear, deleteFootwear };
+module.exports = { kids, addKids, deleteKids };

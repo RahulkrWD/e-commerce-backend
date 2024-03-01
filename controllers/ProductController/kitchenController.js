@@ -1,7 +1,7 @@
-const footwearModel = require("../../models/footwears");
+const kitchenModel = require("../../models/kitchen");
 
-// find footwears
-async function footWear(req, res) {
+// find kitchen and filter it
+async function kitchen(req, res) {
   let query = {};
   let id = +req.query.id;
   let lcost = +req.query.lcost;
@@ -23,15 +23,15 @@ async function footWear(req, res) {
 
   const sortQuery = sortOption[sort] || {};
   try {
-    const find = await footwearModel.find(query).sort(sortQuery);
+    const find = await kitchenModel.find(query).sort(sortQuery);
     res.send(find);
   } catch (err) {
-    console.log(err);
+    res.send({ success: false, message: "server error" });
   }
 }
 
-// add footwears
-async function addFootwear(req, res) {
+// add kitchen
+async function addKitchen(req, res) {
   try {
     const {
       categoryId,
@@ -46,7 +46,7 @@ async function addFootwear(req, res) {
       details,
       gallery,
     } = req.body;
-    const exising = await footwearModel.findOne({ productId });
+    const exising = await kitchenModel.findOne({ productId });
     if (exising) {
       return res.send({ success: false, message: "Already existing" });
     }
@@ -57,7 +57,7 @@ async function addFootwear(req, res) {
         message: "CategoryId does not match",
       });
     }
-    const create = await footwearModel.create({
+    const create = await kitchenModel.create({
       categoryId,
       productId,
       cost,
@@ -76,24 +76,24 @@ async function addFootwear(req, res) {
   }
 }
 
-// delete footwears
-async function deleteFootwear(req, res) {
+// delete kitchen
+async function deleteKitchen(req, res) {
   const { productId } = req.body;
 
-  const exising = await footwearModel.findOne({ productId });
+  const exising = await kitchenModel.findOne({ productId });
   if (!exising) {
     return res.send({ success: false, message: "product not existing" });
   }
   try {
-    const deleteFootwear = await footwearModel.deleteOne({ productId });
+    const deleteKitchen = await kitchenModel.deleteOne({ productId });
     res.send({
       success: true,
       message: "product delete success",
-      deleteFootwear,
+      kitchenModel,
     });
   } catch (err) {
     console.log(err);
     res.send({ success: false, message: "server error", err });
   }
 }
-module.exports = { footWear, addFootwear, deleteFootwear };
+module.exports = { kitchen, addKitchen, deleteKitchen };

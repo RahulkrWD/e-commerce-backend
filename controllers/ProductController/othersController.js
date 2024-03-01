@@ -50,6 +50,13 @@ async function addCaps(req, res) {
     if (exising) {
       return res.send({ success: false, message: "Already existing" });
     }
+    const expectedCategoryId = [909];
+    if (!expectedCategoryId.includes(categoryId)) {
+      return res.send({
+        success: false,
+        message: "CategoryId does not match",
+      });
+    }
     const create = await capsModel.create({
       categoryId,
       productId,
