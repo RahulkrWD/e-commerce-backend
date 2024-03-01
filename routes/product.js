@@ -1,19 +1,26 @@
 const express = require("express");
 const category = require("../controllers/ProductController/category");
 const router = express.Router();
-const quicksearch = require("../controllers/ProductController/quickSearch");
-const menDeals = require("../controllers/ProductController/mensDeals");
-const womenDeals = require("../controllers/ProductController/womenDeals");
-const mobileController = require("../controllers/ProductController/mobileController.js");
-const shoesController = require("../controllers/ProductController/shoesController.js");
+const deals = require("../controllers/ProductController/deals.js");
+const capsController = require("../controllers/ProductController/othersController.js");
+const foootWearController = require("../controllers/ProductController/footwearController.js");
 
-router.get("/category", category);
+// category
+router.get("/category", category.category);
+router.post("/add/category", category.addCategory);
+router.delete("/delete/category", category.deleteCategory);
 
-router.get("/quicksearch", quicksearch);
-router.get("/quicksearch/:id", quicksearch);
+// others / caps , belts, sunglasses
+router.get("/others", capsController.caps);
+router.post("/add/others", capsController.addCaps);
+router.delete("/delete/others", capsController.deleteCaps);
 
-router.get("/mens/deals", menDeals);
-router.get("/womens/deals", womenDeals);
-router.get("/mobile/:id", mobileController);
-router.get("/shoes/:id", shoesController);
+// footwears
+router.get("/footwears", foootWearController.footWear);
+router.get("/add/footwears", foootWearController.addFootwear);
+router.get("/delete/footwears", foootWearController.deleteFootwear);
+
+// deal's of the day
+router.get("/deals", deals);
+
 module.exports = router;
