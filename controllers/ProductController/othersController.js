@@ -50,7 +50,7 @@ async function addCaps(req, res) {
     if (exising) {
       return res.send({ success: false, message: "Already existing" });
     }
-    const expectedCategoryId = [909];
+    const expectedCategoryId = [101];
     if (!expectedCategoryId.includes(categoryId)) {
       return res.send({
         success: false,

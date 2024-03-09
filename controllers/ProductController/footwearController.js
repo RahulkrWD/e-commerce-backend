@@ -50,7 +50,7 @@ async function addFootwear(req, res) {
     if (exising) {
       return res.send({ success: false, message: "Already existing" });
     }
-    const expectedCategoryId = [909];
+    const expectedCategoryId = [202];
     if (!expectedCategoryId.includes(categoryId)) {
       return res.send({
         success: false,
@@ -72,7 +72,7 @@ async function addFootwear(req, res) {
     });
     res.send(create);
   } catch (err) {
-    res.send({ success: false, message: "server error" });
+    res.send({ success: false, message: "server error", err });
   }
 }
 

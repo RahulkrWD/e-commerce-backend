@@ -1,7 +1,6 @@
 const express = require("express");
 const category = require("../controllers/ProductController/category");
 const router = express.Router();
-const deals = require("../controllers/ProductController/deals.js");
 const capsController = require("../controllers/ProductController/othersController.js");
 const foootWearController = require("../controllers/ProductController/footwearController.js");
 const braceletController = require("../controllers/ProductController/braceletController.js");
@@ -11,7 +10,6 @@ const walletsController = require("../controllers/ProductController/walletsContr
 const highlighterController = require("../controllers/ProductController/highlighterController.js");
 const kidsController = require("../controllers/ProductController/kidsController.js");
 const bagsController = require("../controllers/ProductController/bagsController.js");
-const bags = require("../models/bags.js");
 
 // category
 router.get("/category", category.category);
@@ -25,8 +23,8 @@ router.delete("/delete/others", capsController.deleteCaps);
 
 // footwears
 router.get("/footwears", foootWearController.footWear);
-router.get("/add/footwears", foootWearController.addFootwear);
-router.get("/delete/footwears", foootWearController.deleteFootwear);
+router.post("/add/footwears", foootWearController.addFootwear);
+router.delete("/delete/footwears", foootWearController.deleteFootwear);
 
 // bracelet
 router.get("/bracelet", braceletController.bracelet);
@@ -62,8 +60,5 @@ router.delete("/delete/kids", kidsController.deleteKids);
 router.get("/bags", bagsController.bags);
 router.post("/add/bags", bagsController.addBags);
 router.delete("/delete/bags", bagsController.deleteBags);
-
-// deal's of the day
-router.get("/deals", deals);
 
 module.exports = router;

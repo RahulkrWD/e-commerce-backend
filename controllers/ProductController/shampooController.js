@@ -50,7 +50,7 @@ async function addShampoo(req, res) {
     if (exising) {
       return res.send({ success: false, message: "Already existing" });
     }
-    const expectedCategoryId = [909];
+    const expectedCategoryId = [505];
     if (!expectedCategoryId.includes(categoryId)) {
       return res.send({
         success: false,
