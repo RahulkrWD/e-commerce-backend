@@ -6,12 +6,11 @@ const authRoute = require("./routes/authRoute");
 const product = require("./routes/product");
 const cors = require("cors");
 
-// config dotenv file
 dotenv.config();
 const app = express();
-// app.use(morgan("dev"));
-app.use(express.json()); // Parse incoming request bodies in JSON format
-connectDB(); // connection to mongodb
+
+app.use(express.json());
+connectDB();
 app.use(cors());
 
 app.get("/", function (req, res) {
