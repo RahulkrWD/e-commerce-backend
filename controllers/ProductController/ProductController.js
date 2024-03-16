@@ -21,6 +21,8 @@ async function product(req, res) {
   // lcost to hcost
   if (category && lcost && hcost) {
     query = { categoryId: category, cost: { $gt: lcost, $lt: hcost } };
+  } else if (lcost && hcost) {
+    query = { cost: { $gt: lcost, $lt: hcost } };
   }
   // sort
   const sortOption = {
@@ -53,7 +55,13 @@ async function addProduct(req, res) {
       gallery,
     } = req.body;
 
-    const exising = await walletModel.findOne({ productId });
+    const exising = await ProductModel.findOne({ productId });
+    if (exising) {
+      return res.send({
+        success: false,
+        message: "product id is Already exisiting",
+      });
+    }
     const create = await ProductModel.create({
       categoryId,
       productId,
@@ -70,13 +78,14 @@ async function addProduct(req, res) {
     res.send(create);
   } catch (err) {
     res.send({ success: false, message: "server error" });
+    console.log(err);
   }
 }
 
 // delete product
 async function deleteProduct(req, res) {
   const { productId } = req.body;
-  const exising = await walletModel.findOne({ productId });
+  const exising = await ProductModel.findOne({ productId });
   if (!exising) {
     return res.send({ success: false, message: "product not existing" });
   }

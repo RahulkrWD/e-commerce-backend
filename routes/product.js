@@ -8,7 +8,7 @@ router.get("/category", category.category);
 router.post("/add/category", category.addCategory);
 router.delete("/delete/category", category.deleteCategory);
 
-// wallets
+// All product
 router.get("/product", productController.product);
 router.post("/add/product", productController.addProduct);
 router.delete("/delete/product", productController.deleteProduct);
