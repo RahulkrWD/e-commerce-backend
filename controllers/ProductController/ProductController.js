@@ -1,37 +1,43 @@
-const kidsModel = require("../../models/kids");
+const ProductModel = require("../../models/Product");
 
-// find kids and filter it
-async function kids(req, res) {
+// find product and filter
+async function product(req, res) {
   let query = {};
+  let category = +req.query.category;
   let id = +req.query.id;
   let lcost = +req.query.lcost;
   let hcost = +req.query.hcost;
   let sort = req.query.sort;
-
-  if (id) {
-    query = { productId: id };
+  // filter category
+  if (category) {
+    query = { categoryId: category };
   }
 
-  if (lcost && hcost) {
-    query = { cost: { $gt: lcost, $lt: hcost } };
+  // filter each oroduct category
+  if (category && id) {
+    query = { categoryId: category, productId: id };
+  }
+
+  // lcost to hcost
+  if (category && lcost && hcost) {
+    query = { categoryId: category, cost: { $gt: lcost, $lt: hcost } };
   }
   // sort
   const sortOption = {
     asc: { cost: 1 },
     desc: { cost: -1 },
   };
-
   const sortQuery = sortOption[sort] || {};
   try {
-    const find = await kidsModel.find(query).sort(sortQuery);
+    const find = await ProductModel.find(query).sort(sortQuery);
     res.send(find);
   } catch (err) {
+    console.log(err);
     res.send({ success: false, message: "server error" });
   }
 }
-
-// add kids
-async function addKids(req, res) {
+// add product
+async function addProduct(req, res) {
   try {
     const {
       categoryId,
@@ -46,18 +52,9 @@ async function addKids(req, res) {
       details,
       gallery,
     } = req.body;
-    const exising = await kidsModel.findOne({ productId });
-    if (exising) {
-      return res.send({ success: false, message: "Already existing" });
-    }
-    const expectedCategoryId = [808];
-    if (!expectedCategoryId.includes(categoryId)) {
-      return res.send({
-        success: false,
-        message: "CategoryId does not match",
-      });
-    }
-    const create = await kidsModel.create({
+
+    const exising = await walletModel.findOne({ productId });
+    const create = await ProductModel.create({
       categoryId,
       productId,
       cost,
@@ -76,20 +73,22 @@ async function addKids(req, res) {
   }
 }
 
-// delete kids
-async function deleteKids(req, res) {
+// delete product
+async function deleteProduct(req, res) {
   const { productId } = req.body;
-
-  const exising = await kidsModel.findOne({ productId });
+  const exising = await walletModel.findOne({ productId });
   if (!exising) {
     return res.send({ success: false, message: "product not existing" });
   }
   try {
-    const deleteKids = await kidsModel.deleteOne({ productId });
-    res.send({ success: true, message: "product delete success", deleteKids });
+    const deleteProduct = await ProductModel.deleteOne({ productId });
+    res.send({
+      success: true,
+      message: "product delete success",
+      deleteProduct,
+    });
   } catch (err) {
-    console.log(err);
     res.send({ success: false, message: "server error", err });
   }
 }
-module.exports = { kids, addKids, deleteKids };
+module.exports = { product, addProduct, deleteProduct };

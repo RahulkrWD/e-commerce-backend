@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const walletsSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
   categoryId: { type: Number, required: true },
   productId: { type: Number, required: true },
   cost: { type: Number, required: true },
@@ -13,4 +13,4 @@ const walletsSchema = new mongoose.Schema({
   gallery: { type: [String], required: true },
 });
 
-module.exports = mongoose.model("wallets", walletsSchema);
+module.exports = mongoose.model("products", productSchema);
