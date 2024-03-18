@@ -3,21 +3,18 @@ const ProductModel = require("../../models/Product");
 // find product and filter
 async function product(req, res) {
   let query = {};
-  let category = +req.query.category;
-  let id = +req.query.id;
-  let lcost = +req.query.lcost;
-  let hcost = +req.query.hcost;
-  let sort = req.query.sort;
+  const { category, id, lcost, hcost, type, sort } = req.query;
   // filter category
-  if (category) {
+
+  if (category && id) {
+    query = { categoryId: category, productId: id };
+  } else if (category) {
     query = { categoryId: category };
   }
 
-  // filter each oroduct category
-  if (category && id) {
-    query = { categoryId: category, productId: id };
+  if (category && type) {
+    query = { categoryId: category, type: type };
   }
-
   // lcost to hcost
   if (category && lcost && hcost) {
     query = { categoryId: category, cost: { $gt: lcost, $lt: hcost } };
