@@ -52,6 +52,22 @@ async function addProduct(req, res) {
       gallery,
     } = req.body;
 
+    if (
+      !categoryId ||
+      !productId ||
+      !cost ||
+      !image ||
+      !rating ||
+      !productName ||
+      !type ||
+      !offer ||
+      !description ||
+      !details ||
+      !gallery
+    ) {
+      return res.send({ success: false, message: "all  fields are required" });
+    }
+
     const exising = await ProductModel.findOne({ productId });
     if (exising) {
       return res.send({
@@ -72,7 +88,7 @@ async function addProduct(req, res) {
       details,
       gallery,
     });
-    res.send(create);
+    res.send({ success: true, message: "product added", create });
   } catch (err) {
     res.send({ success: false, message: "server error" });
     console.log(err);
