@@ -7,4 +7,6 @@ router.get("/product", productController.product);
 router.post("/add/product", productController.addProduct);
 router.delete("/delete/product", productController.deleteProduct);
 
+// payment and placeorder
+
 module.exports = router;
