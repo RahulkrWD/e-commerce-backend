@@ -1,4 +1,16 @@
 const mongoose = require("mongoose");
+const productSchema = new mongoose.Schema({
+  categoryId: { type: Number, require: true },
+  cost: { type: Number, require: true },
+  description: { type: String, require: true },
+  details: { type: String, require: true },
+  image: { type: String, require: true },
+  productId: { type: Number, require: true },
+  productName: { type: String, require: true },
+  quantity: { type: Number, require: true },
+  totalPrice: { type: Number, require: true },
+  type: { type: String, require: true },
+});
 const orderSchema = new mongoose.Schema(
   {
     orderId: { type: String, require: true },
@@ -10,16 +22,9 @@ const orderSchema = new mongoose.Schema(
     state: { type: String, require: true },
     address: { type: String, require: true },
     uniqueId: { type: Number, require: true },
-    categoryId: { type: Number, require: true },
-    cost: { type: Number, require: true },
-    image: { type: String, require: true },
-    productId: { type: Number, require: true },
-    productName: { type: String, require: true },
-    quantity: { type: Number, require: true },
-    type: { type: String, require: true },
-    totalPrice: { type: Number, require: true },
-    payment: { type: String, require: true },
     status: { type: String, require: true },
+    totalPrice: { type: Number, require: true },
+    products: [productSchema],
   },
   { timestamps: true }
 );

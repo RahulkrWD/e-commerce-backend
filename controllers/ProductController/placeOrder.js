@@ -5,8 +5,8 @@ const orderModel = require("../../models/placeOrder");
 dotenv.config();
 
 const razorpay = new Razorpay({
-  key_id: "rzp_test_drjHwcTz7rLPPq",
-  key_secret: "gJrKh7SahfQdwYfg8uQIcFvV",
+  key_id: `${process.env.RAZORPAY_KEY_ID}`,
+  key_secret: `${process.env.RAZORPAY_KEY_SECRET}`,
 });
 
 async function placeOrder(req, res) {
@@ -20,14 +20,8 @@ async function placeOrder(req, res) {
       state,
       address,
       uniqueId,
-      categoryId,
-      cost,
-      image,
-      productId,
-      productName,
-      quantity,
-      type,
       totalPrice,
+      products,
     } = req.body;
 
     const options = {
@@ -39,7 +33,7 @@ async function placeOrder(req, res) {
     const order = await razorpay.orders.create(options);
     const newOrder = await orderModel.create({
       orderId: order.id,
-      amount: totalPrice,
+      totalPrice,
       status: "pending",
       name,
       email,
@@ -49,13 +43,7 @@ async function placeOrder(req, res) {
       state,
       address,
       uniqueId,
-      categoryId,
-      cost,
-      image,
-      productId,
-      productName,
-      quantity,
-      type,
+      products,
     });
     res.send({
       success: true,
