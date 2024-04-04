@@ -1,21 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const registerController = require("../controllers/authController/authRegister");
-const loginController = require("../controllers/authController/authLogin");
-const authenticateToken = require("../controllers/authController/authMiddleware");
 const forgetPassword = require("../controllers/authController/forgetPassword");
-const googleLoginController = require("../controllers/authController/googleLoginController");
-const googleRegisterController = require("../controllers/authController/googleRegisterController");
+const auth = require("../controllers/authController/auth");
+const google = require("../controllers/authController/google");
+const profile = require("../controllers/authController/profile");
 
-router.post("/register", registerController.registerController);
-router.post("/verify-user", registerController.verifyOtp);
-router.post("/login", loginController);
+router.post("/register", auth.registerController);
+router.post("/verify-user", auth.verifyOtp);
+router.post("/login", auth.loginController);
 router.post("/forget-password", forgetPassword.forgetPassword);
 router.post("/reset-password", forgetPassword.resetpassword);
-router.post("/google-login", googleLoginController);
-router.post("/google-register", googleRegisterController);
+router.post("/google-login", google.googleLoginController);
+router.post("/google-register", google.googleRegisterController);
 
-router.get("/private", authenticateToken, (req, res) => {
-  res.json({ message: "This is a private route", user: req.user });
-});
+router.get("/profile", profile);
 module.exports = router;

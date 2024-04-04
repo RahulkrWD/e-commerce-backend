@@ -1,6 +1,7 @@
 const userModel = require("../../models/user");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 
 // register
 const transporter = nodemailer.createTransport({
@@ -73,4 +74,67 @@ async function verifyOtp(req, res) {
   }
 }
 
-module.exports = { registerController, verifyOtp };
+// login
+const loginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.send({ message: "invalid email or password" });
+    }
+
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.send({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.send({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+
+    const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    res.send({
+      user: user,
+      success: true,
+      message: "login successfully",
+      token,
+    });
+  } catch (err) {
+    res.send({
+      success: false,
+      message: "error in login",
+    });
+  }
+};
+
+// middleware
+const authenticateToken = (req, res, next) => {
+  const token = req.header("Authorization");
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized person" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: "Invalid token" });
+    }
+    req.user = user;
+    next();
+  });
+};
+
+module.exports = {
+  registerController,
+  verifyOtp,
+  loginController,
+  authenticateToken,
+};
