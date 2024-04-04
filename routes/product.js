@@ -12,4 +12,6 @@ router.delete("/delete/product", productController.deleteProduct);
 router.post("/placeOrder", placeorder.placeOrder);
 router.post("/payment/success", placeorder.payment);
 
+router.get("/order", placeorder.order);
+
 module.exports = router;

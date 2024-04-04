@@ -70,4 +70,20 @@ async function payment(req, res) {
   }
 }
 
-module.exports = { placeOrder, payment };
+// order
+async function order(req, res) {
+  let query = {};
+  let id = req.query.id;
+  if (id) {
+    query = { uniqueId: id };
+  }
+
+  try {
+    const order = await orderModel.find(query);
+    res.send({ success: true, order });
+  } catch (err) {
+    console.log("server error", err);
+  }
+}
+
+module.exports = { placeOrder, payment, order };
