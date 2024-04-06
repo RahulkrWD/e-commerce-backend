@@ -1,4 +1,12 @@
 const mongoose = require("mongoose");
+
+const priceSchema = new mongoose.Schema({
+  delivery: { type: Number, require: true },
+  discount: { type: Number, require: true },
+  price: { type: Number, require: true },
+  finalPrice: { type: Number, require: true },
+});
+
 const productSchema = new mongoose.Schema({
   categoryId: { type: Number, require: true },
   cost: { type: Number, require: true },
@@ -24,6 +32,7 @@ const orderSchema = new mongoose.Schema(
     uniqueId: { type: Number, require: true },
     status: { type: String, require: true },
     totalPrice: { type: Number, require: true },
+    price: [priceSchema],
     products: [productSchema],
   },
   { timestamps: true }

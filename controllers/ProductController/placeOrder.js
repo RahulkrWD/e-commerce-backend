@@ -22,6 +22,7 @@ async function placeOrder(req, res) {
       uniqueId,
       totalPrice,
       products,
+      price,
     } = req.body;
 
     const options = {
@@ -44,6 +45,7 @@ async function placeOrder(req, res) {
       address,
       uniqueId,
       products,
+      price,
     });
     res.send({
       success: true,
