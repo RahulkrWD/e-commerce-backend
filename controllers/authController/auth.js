@@ -102,10 +102,10 @@ const loginController = async (req, res) => {
       expiresIn: "7d",
     });
     res.send({
-      user: user,
       success: true,
       message: "login successfully",
       token,
+      user,
     });
   } catch (err) {
     res.send({

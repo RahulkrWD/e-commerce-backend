@@ -1,35 +1,9 @@
 const ProductModel = require("../../models/Product");
 
-// find product and filter
 async function product(req, res) {
-  let query = {};
-  const { category, id, lcost, hcost, type, sort } = req.query;
-  // filter category
-
-  if (category && id) {
-    query = { categoryId: category, productId: id };
-  } else if (category) {
-    query = { categoryId: category };
-  }
-
-  if (category && type) {
-    query = { categoryId: category, type: type };
-  }
-  // lcost to hcost
-  if (category && lcost && hcost) {
-    query = { categoryId: category, cost: { $gt: lcost, $lt: hcost } };
-  } else if (lcost && hcost) {
-    query = { cost: { $gt: lcost, $lt: hcost } };
-  }
-  // sort
-  const sortOption = {
-    asc: { cost: 1 },
-    desc: { cost: -1 },
-  };
-  const sortQuery = sortOption[sort] || {};
   try {
-    const find = await ProductModel.find(query).sort(sortQuery);
-    res.send(find);
+    const findAll = await ProductModel.find();
+    res.send(findAll);
   } catch (err) {
     console.log(err);
     res.send({ success: false, message: "server error" });
