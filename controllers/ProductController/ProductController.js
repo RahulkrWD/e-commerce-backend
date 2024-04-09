@@ -1,8 +1,13 @@
 const ProductModel = require("../../models/Product");
 
 async function product(req, res) {
+  let query = {};
+  let product = req.query.product;
+  if (product) {
+    query = { type: { $regex: new RegExp(product, "i") } };
+  }
   try {
-    const findAll = await ProductModel.find();
+    const findAll = await ProductModel.find(query);
     res.send(findAll);
   } catch (err) {
     console.log(err);
