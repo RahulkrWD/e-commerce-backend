@@ -35,7 +35,7 @@ async function placeOrder(req, res) {
     const newOrder = await orderModel.create({
       orderId: order.id,
       totalPrice,
-      status: "pending",
+      status: "Success",
       name,
       email,
       phone,
