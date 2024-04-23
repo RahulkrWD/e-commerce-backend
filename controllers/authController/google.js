@@ -5,11 +5,11 @@ const userModel = require("../../models/user");
 async function googleRegisterController(req, res) {
   try {
     const { name, email, uniqueId } = req.body;
-    const exisitingUser = await userMode.findOne({ email });
+    const exisitingUser = await userModel.findOne({ email });
     if (exisitingUser) {
       return res.send({ success: false, message: "Already have an acccount" });
     }
-    const signup = await userMode.create({
+    const signup = await userModel.create({
       name,
       email,
       uniqueId,
