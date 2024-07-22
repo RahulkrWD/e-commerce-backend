@@ -18,14 +18,16 @@ const userSchema = new mongoose.Schema(
       type: Number,
       require: true,
     },
-    uniqueId: {
-      type: Number,
-      require: true,
-    },
     role: {
       type: Number,
       default: 0,
     },
+
+    picName: String,
+    size: Number,
+    type: String,
+    data: Buffer,
+    createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );

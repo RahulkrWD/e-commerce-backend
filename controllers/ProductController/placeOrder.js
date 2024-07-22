@@ -19,7 +19,7 @@ async function placeOrder(req, res) {
       city,
       state,
       address,
-      uniqueId,
+      userID,
       totalPrice,
       products,
       price,
@@ -43,7 +43,7 @@ async function placeOrder(req, res) {
       city,
       state,
       address,
-      uniqueId,
+      userID,
       products,
       price,
     });
@@ -77,7 +77,7 @@ async function order(req, res) {
   let query = {};
   let id = req.query.id;
   if (id) {
-    query = { uniqueId: id };
+    query = { userID: id };
   }
 
   try {

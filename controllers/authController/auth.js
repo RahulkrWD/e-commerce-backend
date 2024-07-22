@@ -51,7 +51,7 @@ const registerController = async (req, res) => {
 // otp verification
 async function verifyOtp(req, res) {
   try {
-    const { name, password, email, otp, uniqueId } = req.body;
+    const { name, password, email, otp } = req.body;
     if (!name || !email || !password || !otp) {
       return res.send({ success: false, message: "All fields are required" });
     }
@@ -62,7 +62,6 @@ async function verifyOtp(req, res) {
         name,
         email,
         password: hashedPassword,
-        uniqueId,
         otp,
       });
       res.send({ success: true, message: "register successfully" });

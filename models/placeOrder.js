@@ -29,7 +29,7 @@ const orderSchema = new mongoose.Schema(
     city: { type: String, require: true },
     state: { type: String, require: true },
     address: { type: String, require: true },
-    uniqueId: { type: Number, require: true },
+    userID: { type: String, require: true },
     status: { type: String, require: true },
     totalPrice: { type: Number, require: true },
     price: [priceSchema],
