@@ -19,5 +19,6 @@ router.get("/profile", profile.getProfile);
 
 // profile photo update
 router.put("/upload/photo/:id", upload.single("file"), profile.uploadPhoto);
+// get profile photo
 router.get("/get-photo/:id", profile.getPhoto);
 module.exports = router;

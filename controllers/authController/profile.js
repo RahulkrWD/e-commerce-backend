@@ -22,7 +22,7 @@ async function uploadPhoto(req, res) {
     }
     const id = req.params.id;
     const File = await userModel.findOneAndUpdate(
-      { uniqueId: id },
+      { _id: id },
       {
         picName: file.originalname,
         size: file.size,
@@ -53,7 +53,7 @@ async function getPhoto(req, res) {
         id: file._id,
         picName: file.picName,
         type: file.type,
-        data: file.data.toString("base64"),
+        data: file.data ? file.data.toString("base64") : null,
       });
     });
     res.send(profile);
