@@ -1,5 +1,6 @@
 const userModel = require("../../models/user");
 
+// get profile
 async function getProfile(req, res) {
   try {
     let query = {};
@@ -13,6 +14,7 @@ async function getProfile(req, res) {
     console.log("sever error, please try again", err);
   }
 }
+
 // upload profile photo
 async function uploadPhoto(req, res) {
   try {
